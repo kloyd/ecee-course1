@@ -34,14 +34,6 @@ include sources.mk
 # Platform Overrides
 PLATFORM = MSP432
 
-# Architectures Specific Flags
-LINKER_FILE = ../msp432p401r.lds
-CPU = cortex-m4
-ARCH = armv7e-m
-FLOAT = hard
-FPU = fpv4-sp-d16
-SPECS = nosys.specs
-
 BASENAME = c1m2
 TARGET = $(BASENAME).out
 
@@ -49,33 +41,6 @@ OBJS = $(SOURCES:.c=.o)
 INTERMEDIATE = $(SOURCES:.c=.i)
 ASMFILES = $(SOURCES:.c=.asm)
 DEPFILES = $(SOURCES:.c=.d)
-
-AFLAGS = -Wall \
-	 -Werror \
-	 -g \
-	 -O0 \
-	 -std=c99 \
-	 -MD
-
-ARMFLAGS = -mcpu=$(CPU) -mthumb -march=$(ARCH) -mfloat-abi=$(FLOAT) -mfpu=$(FPU) --specs=$(SPECS)
-
-# Compiler Flags and Defines
-ifeq ($(PLATFORM), HOST)
-  CC = gcc
-  CFLAGS = $(AFLAGS)
-  DFLAGS = -DHOST=true
-  LD = ld
-  LDFLAGS = -Wl,-Map=$(BASENAME).map
-  SOURCES = $(SOURCES_HOST)
-else
-  CC = arm-none-eabi-gcc
-  CFLAGS = $(AFLAGS) $(ARMFLAGS)
-  DFLAGS = -DMSP432=true
-  LD = arm-none-eabi-ld
-  LDFLAGS = -Wl,-T ../msp432p401r.lds -Wl,-Map=$(BASENAME).map
-  SOURCES = $(SOURCES_MSP432)
-endif
-CPPFLAGs = 
 
 .PHONY: build
 build: all
