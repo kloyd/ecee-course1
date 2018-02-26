@@ -52,17 +52,23 @@ ARMFLAGS = -mcpu=$(CPU) -mthumb -march=$(ARCH) -mfloat-abi=$(FLOAT) -mfpu=$(FPU)
 ifeq ($(PLATFORM), HOST)
   CC = gcc
   CFLAGS = $(AFLAGS)
-  DFLAGS = -DHOST=true
+  TDFLAGS = -DHOST=true
   LD = ld
   LDFLAGS = -Wl,-Map=$(BASENAME).map
   SOURCES = $(SOURCES_HOST)
 else
   CC = arm-none-eabi-gcc
   CFLAGS = $(AFLAGS) $(ARMFLAGS)
-  DFLAGS = -DMSP432=true
+  TDFLAGS = -DMSP432=true
   LD = arm-none-eabi-ld
   LDFLAGS = -Wl,-T $(LINKER_FILE) -Wl,-Map=$(BASENAME).map
   SOURCES = $(SOURCES_MSP432)
 endif
 CPPFLAGs = 
+
+ifeq ($(COURSE1), TRUE)
+  DFLAGS = $(TDFLAGS) -DCOURSE1
+else
+  DFLAGS = $(TDFLAGS) 
+endif
 
