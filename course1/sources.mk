@@ -66,9 +66,15 @@ else
 endif
 CPPFLAGs = 
 
-ifeq ($(COURSE1), TRUE)
-  DFLAGS = $(TDFLAGS) -DCOURSE1
+ifeq ($(COURSE1), 1)
+  VDFLAGS = $(TDFLAGS) -DCOURSE1
 else
-  DFLAGS = $(TDFLAGS) 
+  VDFLAGS = $(TDFLAGS) 
+endif
+
+ifeq ($(VERBOSE), 1)
+  DFLAGS = $(VDFLAGS) -DVERBOSE
+else
+  DFLAGS = $(VDFLAGS)
 endif
 
