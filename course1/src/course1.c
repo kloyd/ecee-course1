@@ -32,6 +32,13 @@ int8_t test_data1() {
 
   PRINTF("\ntest_data1();\n");
   ptr = (uint8_t*) reserve_words( DATA_SET_SIZE_W );
+#ifdef VERBOSE
+  for(int i = 0; i < DATA_SET_SIZE_W; i++) {
+	  PRINTF("%c,", *(ptr+i));
+  }
+  PRINTF("\n");
+#endif
+
 
   if (! ptr )
   {
@@ -44,6 +51,13 @@ int8_t test_data1() {
   PRINTF("  Initial number: %d\n", num);
   PRINTF("  Final Decimal number: %d\n", value);
   #endif
+#ifdef VERBOSE
+  for(int i = 0; i < DATA_SET_SIZE_W; i++) {
+	  PRINTF("%c,", *(ptr+i));
+  }
+  PRINTF("\n");
+#endif
+
   free_words( (uint32_t*)ptr );
 
   if ( value != num )
@@ -68,7 +82,11 @@ int8_t test_data2() {
   }
 
   digits = my_itoa( num, ptr, BASE_10);
+#ifdef VERBOSE
+  PRINTF(" ptr : %s\n", ptr);
+#endif
   value = my_atoi( ptr, digits, BASE_10);
+  value = my_atoi( ptr, 10, 10);
   #ifdef VERBOSE
   PRINTF("  Initial Decimal number: %d\n", num);
   PRINTF("  Final Decimal number: %d\n", value);

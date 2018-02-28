@@ -21,6 +21,7 @@
  *
  */
 #include <stdint.h>
+#include <stdlib.h>
 #include "memory.h"
 
 /***********************************************************
@@ -77,12 +78,12 @@ uint8_t * my_reverse(uint8_t * src, size_t length)
 
 int32_t * reserve_words(size_t length)
 {
-	return (int32_t) 0;
+	return (int32_t *) malloc(length);
 }
 
 void free_words(uint32_t * src)
 {
-	
+	free(src);
 }
 
 
