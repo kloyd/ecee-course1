@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "data.h"
 #include "platform.h"
+#include "course1.h"
 
 /*
  *
@@ -29,10 +30,6 @@ void reverse( uint8_t * ptr, uint32_t length)
 uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 {
 
-#ifdef VERBOSE
-	PRINTF("data : %d\n", data);
-	PRINTF("base : %d\n", base);
-#endif
         int i = 0;
 	int isNegative = 0;
 
@@ -41,6 +38,11 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 		*ptr = '0';
 		*(ptr+1) = 0;
 		return data;
+	}
+
+	for(int n = 0; n < DATA_SET_SIZE_W; n++)
+	{
+		*(ptr + n) = 32;
 	}
 	
 	if (data < 0 ) 
@@ -54,7 +56,6 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 		int rem = data % base;
 		*(ptr+i) = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
 		i++;
-		PRINTF("data: %d, rem: %d, i: %d\n", data, rem, i);
 		data = data / base;
 	}
 
@@ -63,7 +64,7 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 		*(ptr+i) = '-';
 	}
 
-	reverse(ptr, 10);
+	reverse(ptr, DATA_SET_SIZE_W);
 
 	return data;
 }
@@ -76,28 +77,34 @@ int32_t my_atoi(uint8_t * ptr, uint8_t digits, uint32_t base)
 	//
 	int32_t result = 0;
 	int sign = 1;
-#ifdef VERBOSE
-	printf("ptr : %s", (char *)ptr);
-#endif
 	while ( *ptr != 0) {
-#ifdef VERBOSE
-		printf("*ptr : %d", *ptr);
-#endif
 		if (*ptr == ' ') {
+#ifdef VERBOSE
+			PRINTF("space ");
+#endif
 			ptr++;
 			continue;
 		}
 		if (*ptr == '-') {
 			sign = -1;
 			ptr++;
+#ifdef VERBOSE
+			PRINTF("negative ");
+#endif
 		}
-		if (*ptr >= '0' && *ptr <= '9')
+		if (*ptr >= '0' && *ptr <= 'F')
 		{
-			result *= 10;
-			result += *ptr;
+#ifdef VERBOSE
+			PRINTF("%c ", *ptr);
+#endif
+			result *= base;
+			result += *ptr  - '0';
 			ptr++;
 		}
 	}
+#ifdef VERBOSE
+	PRINTF("\n");
+#endif
 
 	result *= sign;
 
