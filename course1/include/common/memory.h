@@ -95,6 +95,17 @@ void set_all(char * ptr, char value, unsigned int size);
  */
 void clear_all(char * ptr, unsigned int size);
 
+/**
+ * @brief Memory Move characters in an array.
+ *
+ * Take two byte pointers and a length of bytes, move from
+ * source location to destination location for length.
+ * @param src Pointer to source array.
+ * @param dst Pointer to destination array.
+ * @param length Number of elements to move.
+ *
+ * @return Pointer to source array.
+ */
 uint8_t * my_memmove(uint8_t *src, uint8_t *dst, size_t length);
 
 uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length);
