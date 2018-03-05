@@ -147,12 +147,10 @@ uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value);
 uint8_t * my_memzero(uint8_t * src, size_t length);
 
 /**
- * @brief Memory Move bytes in an array.
+ * @brief Reverse bytes in an array.
  *
- * Take two byte pointers and a length of bytes, move from
- * source location to destination location for length.
+ * Given an array of bytes, reverse the array.
  * @param src Pointer to source array.
- * @param dst Pointer to destination array.
  * @param length Number of elements to move.
  *
  * @return Pointer to source array.
@@ -160,28 +158,21 @@ uint8_t * my_memzero(uint8_t * src, size_t length);
 uint8_t * my_reverse(uint8_t * src, size_t length);
 
 /**
- * @brief Memory Move bytes in an array.
+ * @brief Allocate array of words (int32)
  *
- * Take two byte pointers and a length of bytes, move from
- * source location to destination location for length.
- * @param src Pointer to source array.
- * @param dst Pointer to destination array.
- * @param length Number of elements to move.
+ * @param length - number of words to allocate.
  *
- * @return Pointer to source array.
+ * @return Pointer to array.
  */
 int32_t * reserve_words(size_t length);
 
 /**
- * @brief Memory Move bytes in an array.
+ * @brief Free previously allocated memory.
  *
- * Take two byte pointers and a length of bytes, move from
- * source location to destination location for length.
+ * Given pointer to memory, free it.
  * @param src Pointer to source array.
- * @param dst Pointer to destination array.
- * @param length Number of elements to move.
  *
- * @return Pointer to source array.
+ * @return void 
  */
 void free_words(uint32_t * src);
 
