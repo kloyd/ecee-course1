@@ -49,17 +49,13 @@ void print_statistics(unsigned char * array, int length) {
 
   PRINTF("-----\nArray statistics\n-----\n");
 
-  unsigned char min = find_minimum(array, length);
-  PRINTF("Minimum value = %3d\n", min);
+  PRINTF("Minimum value = %3d\n", find_minimum(array, length));
 
-  unsigned char max = find_maximum(array, length);
-  PRINTF("Maximum value = %3d\n", max);
+  PRINTF("Maximum value = %3d\n", find_maximum(array, length));
 
-  unsigned char mean = find_mean(array, length);
-  PRINTF("Mean value = %3d\n", mean);
+  PRINTF("Mean value = %3d\n", find_mean(array, length));
 
-  unsigned char median = find_median(array, length);
-  PRINTF("Median value = %3d\n", median);
+  PRINTF("Median value = %3d\n", find_median(array, length));
 
 }
 
