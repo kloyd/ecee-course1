@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "data.h"
 #include "platform.h"
+#include "memory.h"
 #include "course1.h"
 
 /*
@@ -29,22 +30,34 @@ void reverse( uint8_t * ptr, uint32_t length)
 
 uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 {
+	// data - input number
+	// ptr - empty string of length DATA_SET_SIZE_W
+	// base - base of number desired.
+	// return number of characters in string.
 
         int i = 0;
 	int isNegative = 0;
+	int length = 0;
+	uint8_t * tmpstr;
 
+	// Trivial case, number is zero.
 	if (data == 0) 
 	{
 		*ptr = '0';
 		*(ptr+1) = 0;
-		return data;
+		return 2;
 	}
 
-	for(int n = 0; n < DATA_SET_SIZE_W; n++)
+	// make temp string pointer
+        tmpstr = (uint8_t*) reserve_words( DATA_SET_SIZE_W );
+
+	// Don't assume that the ptr has been cleared, set all to nulls.
+	 for(int n = 0; n < DATA_SET_SIZE_W; n++)
 	{
-		*(ptr + n) = 32;
+		*(ptr + n) = 0;
 	}
-	
+        
+
 	if (data < 0 ) 
 	{
 		isNegative = 1;
@@ -54,25 +67,35 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 	while(data != 0)
 	{
 		int rem = data % base;
-		*(ptr+i) = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+		*(tmpstr+i) = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
 		i++;
 		data = data / base;
 	}
 
 	if(isNegative)
 	{
-		*(ptr+i) = '-';
+		*(tmpstr+i) = '-';
 	}
 
-	reverse(ptr, DATA_SET_SIZE_W);
+	reverse(tmpstr, DATA_SET_SIZE_W);
+	// copy out to ptr
+	for(int n = 0; n < DATA_SET_SIZE_W; n++)
+	{
+		if (*(tmpstr+n) != 0)
+		{
+			*(ptr+length) = *(tmpstr+n);
+			length++;
+		}
+	}
+        free_words( (uint32_t*)tmpstr );
 
-	return data;
+	return length;
 }
 
 int32_t my_atoi(uint8_t * ptr, uint8_t digits, uint32_t base)
 {
 	// ptr - point to string
-	// digits - result of conversion
+	// digits - number of characters in string.
 	// base - number base, e.g. 16, 10, 2
 	//
 	int32_t result = 0;
