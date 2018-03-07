@@ -31,7 +31,7 @@
  * @brief Sets a value of a data array 
  *
  * Given a pointer to a char data set, this will set a provided
- * index into that data set to the value provided.
+ * value into the index
  *
  * @param ptr Pointer to data array
  * @param index Index into pointer array to set value
@@ -45,7 +45,7 @@ void set_value(char * ptr, unsigned int index, char value);
  * @brief Clear a value of a data array 
  *
  * Given a pointer to a char data set, this will clear a provided
- * index into that data set to the value zero.
+ * value into the index.
  *
  * @param ptr Pointer to data array
  * @param index Index into pointer array to set value
