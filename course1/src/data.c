@@ -30,6 +30,7 @@ void reverse( uint8_t * ptr, uint32_t length)
 
 uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 {
+        // I made a change
 	// data - input number
 	// ptr - empty string of length DATA_SET_SIZE_W
 	// base - base of number desired.
